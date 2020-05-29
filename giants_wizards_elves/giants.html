@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+	<meta charset="utf-8" />
+	<title>Giants</title>
+    
+    <style> 
+	
+		body {
+			background-color: #060;
+			background: url('images/fantasy_battleground.png') center center fixed; 
+			background-size: cover;
+		}
+		
+		.imageRight {
+			/* forces images with this class to float on the right side of the screen */
+			float:right;
+			margin-left: 10px;
+		}
+	
+		.imageLeft {
+			float:left;
+			margin-right: 10px;
+		}
+		
+		p {
+			background-color: #FC3;
+			font-size: 16px;
+		}
+		
+		table {
+			/*makes the images inside the table all even in side, beside each other evenly, and push out to cover the entire page */
+			width: 100%;
+		}
+		
+		#theRedo {
+			/* styles the redo button */
+			background-color: #F00;
+			padding: 5px;
+			font-family: Palatino Linotype, Book Antiqua, Palatino, serif;
+		}
+		
+		#theRedo:hover {
+			/*makes the redo button look different when the mousehovers over it */
+			background-color: #000;
+			color: #FFF;
+		}
+	
+	</style>
+    
+</head>
+
+<body>
+    
+    <div id="result"> </div>
+    <!-- shows you what you chose vs what your opponent chose and the outcome fo the battle -->
+	
+    <table border = "0">
+    <!-- makes sure it doesn't look like a table, but still contains the pictures -->
+    
+    	<tr>
+        <!-- 1 table row -->
+    		<td><div id="userPic"> '<img src="images/giant.png" width="600" alt="Giant" class="imageLeft">' </div></td>
+            <!-- image goes inside first collumn -->
+    		<td><div id="vs"> <img src="images/vs.png" width="200"> </div></td>
+    		<td><div id="aiPic"> </div></td>
+            <!-- displays what monster the ai picked -->
+    	</tr>
+        
+    </table>
+    
+    <div id="redo"> </div>
+    <!-- redo button is under the table -->
+    
+</body>
+
+    <script>
+	
+	var ai = " ";
+	//stores what move the ai chose
+	var name = sessionStorage.getItem("name");
+	//receives the variable name from the main page (giants_wizards_elves.html)
+	var userWin = parseInt(sessionStorage.getItem("userWin", userWin));
+	var aiWin = parseInt(sessionStorage.getItem("aiWin", aiWin));
+	
+	
+			function poopFunction() {
+				
+				alert ("User: " + userWin + " -- Opponent: " + aiWin);
+				//tracks the users wins and losses
+				
+				window.history.back();
+			}
+	
+			function battle() {
+				
+			if (userWin == "2") {
+				winEnd();			
+			}
+			
+			else if (aiWin == "2") {
+				loseEnd();			
+			}
+			
+			ai = Math.floor(Math.random()*(4-1)+1);
+			<!-- the random number generator is used as the ai to randomly pick Giants, Wizards, or Elves -->
+			
+			if (ai == 1) {
+				//this if statement displays the result of the set after the player and the ai makes their choice. The outcome and pictures of the ai's choice are different depending on it's choice. 
+				ai = "Giants";
+				document.getElementById("result").innerHTML = "<h2>" + name + ", you both chose Giants! Try again!</h2>";
+				//displays the result on the page to the player
+				document.getElementById("result").style.textAlign = "center";
+				//makes the result appear in the center of the screen
+				document.getElementById("result").style.color = "#FFF";
+				//makes the result white
+				document.getElementById("aiPic").innerHTML = "<img src='images/aiGiant.png' width='500' alt='Opponents Giant' class='imageRight'>";
+				document.getElementById("redo").innerHTML = "<form name='redo' method='post' onSubmit='return poopFunction()'><input type='submit' value='Next Round' id='theRedo'></form>";
+				//makes a redo button that sends you back to the original giants_wizards_eleves.html page when clicked
+			}
+			else if (ai == 2) {
+				ai = "Wizards";
+				document.getElementById("result").innerHTML = "<h2>" + name + ", you chose Giants and your opponent chose Wizards! Your opponent wins!</h2>";
+				document.getElementById("result").style.color = "#FFF"; 
+				document.getElementById("result").style.textAlign = "center";
+				document.getElementById("aiPic").innerHTML = "<img src='images/aiWizard.png' width='300' alt='Opponents Wizard' class='imageRight'>";
+				document.getElementById("redo").innerHTML = "<form name='redo' method='post' onSubmit='return poopFunction()'><input type='submit' value='Next Round' id='theRedo'></form>";
+				aiWin = aiWin + 1;
+				//supposed to count the rounds
+			}
+			else if (ai == 3) {
+				ai = "Elves";
+				document.getElementById("result").innerHTML = "<h2>" + name + ", you chose Giants and your opponent chose Elves! You win!</h2>";
+				document.getElementById("result").style.color = "#FFF"; 
+				document.getElementById("result").style.textAlign = "center";
+				document.getElementById("aiPic").innerHTML = "<img src='images/aiElf.png' width='500' alt='Opponents Elf' class='imageRight'>";
+				document.getElementById("redo").innerHTML = "<form name='redo' method='post' onSubmit='return poopFunction()'><input type='submit' value='Next Round' id='theRedo'></form>";
+				userWin = userWin + 1;
+			}
+			
+	sessionStorage.setItem("userWin", userWin);
+	sessionStorage.setItem("aiWin", aiWin);
+			
+	}
+	
+function winEnd() {
+		//this is called if the player wins
+			document.getElementById("result").innerHTML = " ";
+			document.getElementById("userPic").innerHTML = "<img src='images/giant.png' width=100%>";
+			document.getElementById("vs").innerHTML = "<img src='images/wizard.png' width=100%>";
+			document.getElementById("aiPic").innerHTML = "<img src='images/elf.png' width=100%>";
+			//displays all the creature options on the win page
+		}
+		
+		function loseEnd() {
+		//this is called if the player loses
+		alert("You Lose!")
+		location="questions.html"
+		
+	}
+		
+
+	
+	
+		
+	battle();
+	
+	</script>
+    
+
+</html>

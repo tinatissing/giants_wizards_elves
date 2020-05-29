@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+	<meta charset="utf-8" />
+	<title>Giants, Wizards, Elves</title>
+    
+    <style>
+	
+		#container {
+			/* #container styles everything inside the container on the webpage*/
+			width: 800px;
+			border: 10px solid #FFF;
+			padding: 20px;
+			background-image: url('images/tree_archway.jpeg');
+			/* sets a background image only inside the container */
+			margin-left: auto;
+			margin-right: auto;
+		}
+	
+		body {
+			/* styles everything inside the body (whole page) */
+			background-color: #000;
+			/* if the background image for whatever reason doesnt display, it will show this colour as the background instead */
+			background-image: url('images/green_tiling_background.jpeg');
+		}
+		
+		h1 {
+			/* styles every h1 on the page */
+			text-decoration: underline;
+			font-weight: bold;
+			font-size: 30pt;
+			text-align: center;
+			/* makes the text float in the middle of the screen */
+			font-family: Palatino Linotype, Book Antiqua, Palatino, serif;
+			color: #FFF
+		}
+		
+		p {
+			/* styles every paragraph */
+			color: #FFF;
+		}
+		
+		form {
+			/* styles the form */
+			color: #FFF;
+			font-family:Palatino Linotype, Book Antiqua, Palatino, serif;
+		}
+		
+		a {
+			/* styles link */
+			color: #FF6;
+		}
+		
+		a:hover {
+			color: #F00;
+		}
+	
+	</style>
+    
+    <script>
+
+	var userWin = parseInt(sessionStorage.getItem("userWin"));
+	var aiWin = parseInt(sessionStorage.getItem("aiWin"));
+	
+	if (isNaN(userWin)) {
+		userWin=0;
+		sessionStorage.setItem("userWin", userWin);
+	}
+	
+	if (isNaN(aiWin)) {
+		aiWin=0;
+		sessionStorage.setItem("aiWin", aiWin);
+	}
+	
+	var giants=0;
+	var wizards=0;
+	var elves=0;
+	
+	
+		
+		function start() {
+			//this function shows the beginning of the game
+			
+			var name = document.myForm.theName.value;
+			//collects the value of the name inputed from the form
+			
+			var userName = sessionStorage.setItem("name", name);
+			//sends the variable name and its value to another html page
+			
+			if (document.getElementById("giants").checked) {
+				//this checks to see which choice the user made in the form
+				//giants = giants + 1;
+				//this adds one to the variable giants
+				location = "giants.html";
+				//sends the player to the html page giants to continue the game
+			}
+			else if (document.getElementById("wizards").checked) {
+				//wizards = wizards + 1;
+				location = "wizards.html";
+			}
+			else if (document.getElementById("elves").checked) {
+				//elves = elves + 1;
+				location = "elves.html";
+			}
+		
+			return false;
+		}
+		
+	
+	</script>
+    
+</head>
+
+<body>
+
+	<div id="container">
+    <!-- this captures the body content withing a container that can be styled -->
+    
+	<h1>Giants, Wizards, Elves</h1>
+    
+    <p> Welcome to a world of fantasy! One where any dispute can be resolved with a game of Giants, Wizards, Elves! You and your opponent each pick either Giants, Wizards, or Elves to send into battle; neither knowing which the other will choose. Wizards always beat Giants, Elves always beat Wizards, and Giants always beat Elves! Good luck! </p>
+<!-- how to play -->
+
+	<form name="myForm" method="post" onSubmit="return start()">
+
+		<label for="theName">Please Enter Your Name</label><br>
+        <input text="text" name="userName" id="theName"><br>
+        
+        <label for="userChoice">Choose Giants, Wizards, or Elves</label><br>
+        <input type="radio" name="userChoice" id="giants" value="giants">Giants<br>
+        <input type="radio" name="userChoice" id="wizards" value="wizards">Wizards<br>
+        <input type="radio" name="userChoice" id="elves" value="elves">Elves<br>
+        <!-- these radio buttons give the user a choice of which creature they want to use in battle (p.s. elves are the best out of all of them)-->
+        
+        <input type="submit" value="Process Form"> 
+        
+	</form>
+    
+    <a href="questions.html">The CPT Questions</a>
+    
+    </div>
+    
+</body>
+</html>

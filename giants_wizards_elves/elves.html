@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+	<meta charset="utf-8" />
+	<title>Elves</title>
+    
+   <style>
+   
+   		body {
+			background-color: #060;
+			background: url('images/fantasy_battleground.png') center center fixed; 
+			background-size: cover;
+		}
+		
+		.imageRight {
+			float:right;
+			margin-left: 10px;
+		}
+	
+		.imageLeft {
+			float:left;
+			margin-right: 10px;
+		}
+		
+		p {
+			background-color: #FC3;
+			font-size: 16px;
+		}
+		
+		table {
+			width: 100%;
+		}
+		
+		#theRedo {
+			background-color: #F00;
+			padding: 5px;
+			font-family: Palatino Linotype, Book Antiqua, Palatino, serif;
+		}
+		
+		#theRedo:hover {
+			background-color: #000;
+			color: #FFF;
+		}
+   
+   </style>
+    
+</head>
+
+<body>
+
+	<div id="result"> </div>
+	
+    <table border = "0">
+    
+    	<tr>
+        	<td><div id="userPic"> <img src="images/elf.png" width="300" alt="Elf" class="imageLeft"> </div></td>   
+    		<td><div id="vs"> <img src="images/vs.png" width="200"> </div></td>
+    		<td><div id="aiPic"> </div></td>
+        </tr>
+        
+    </table>
+     
+    <div id="redo"> </div>
+
+</body>
+
+	<script> 
+	
+	var ai = " "
+	var name = sessionStorage.getItem("name");
+	var userWin = parseInt(sessionStorage.getItem("userWin", userWin));
+	var aiWin = parseInt(sessionStorage.getItem("aiWin", aiWin));
+	
+			function poopFunction() {
+			
+				alert ("User: " + userWin + " -- Opponent: " + aiWin);
+				window.history.back();
+			}
+	
+			function battle() {
+				
+			if (userWin == "2") {
+				winEnd();			
+			}
+			
+			else if (aiWin == "2") {
+				loseEnd();			
+			}
+				
+			ai = Math.floor(Math.random()*(4-1)+1);
+			<!-- the random number generator is used as the ai to randomly pick Giants, Wizards, or Elves -->
+			
+			if (ai == 1) {
+				ai = "Giants";
+				document.getElementById("result").innerHTML = "<h2>" + name + ", you chose Elves and your opponent chose Giants! You lose!</h2>";
+				document.getElementById("result").style.textAlign = "center";
+				document.getElementById("result").style.color = "#FFF";
+				document.getElementById("aiPic").innerHTML = "<img src='images/aiGiant.png' width='500' alt='Opponents Giant' class='imageRight'>";
+				document.getElementById("redo").innerHTML = "<form name='redo' method='post' onSubmit='return poopFunction()'><input type='submit' value='Next Round' id='theRedo'></form>";
+				aiWin = aiWin + 1;
+			}
+			else if (ai == 2) {
+				ai = "Wizards";
+				document.getElementById("result").innerHTML = "<h2>" + name + ", you chose Elves and your opponent chose Wizards! You win!</h2>";
+				document.getElementById("result").style.color = "#FFF"; 
+				document.getElementById("result").style.textAlign = "center";
+				document.getElementById("aiPic").innerHTML = "<img src='images/aiWizard.png' width='300' alt='Opponents Wizard' class='imageRight'>";
+				document.getElementById("redo").innerHTML = "<form name='redo' method='post' onSubmit='return poopFunction()'><input type='submit' value='Next Round' id='theRedo'></form>"
+				userWin = userWin + 1;
+			}
+			else if (ai == 3) {
+				ai = "Elves";
+				document.getElementById("result").innerHTML = "<h2>" + name + ", you both chose Elves! Try again!</h2>";
+				document.getElementById("result").style.color = "#FFF"; 
+				document.getElementById("result").style.textAlign = "center";
+				document.getElementById("aiPic").innerHTML = "<img src='images/aiElf.png' width='500' alt='Opponents Elf' class='imageRight'>";
+				document.getElementById("redo").innerHTML = "<form name='redo' method='post' onSubmit='return poopFunction()'><input type='submit' value='Next Round' id='theRedo'></form>";
+			}
+			
+	sessionStorage.setItem("userWin", userWin);
+	sessionStorage.setItem("aiWin", aiWin);
+
+	}
+	
+	function winEnd() {
+		//this is called if the player wins
+		document.getElementById("userPic").innerHTML = "<img src='images/giant.png' width=100%>";
+		document.getElementById("vs").innerHTML = "<img src='images/wizard.png' width=100%>";
+		document.getElementById("aiPic").innerHTML = "<img src='images/elf.png' width=100%>";
+		
+		}
+		
+		function loseEnd() {
+		//this is called if the player loses
+		alert("You Lose!")
+		location="questions.html"
+
+	}
+	
+	battle();
+	
+	</script>
+</html>
